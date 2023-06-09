@@ -1,55 +1,52 @@
 // Copyright 2021 NNTU-CS
-int countPairs1(int *arr, int len, int value) {
-  return 0;
-  int Obj = 0;
+int countPairs1(int* arr, int len, int value) {
+  int count = 0;
   for (int i = 0; i < len - 1; i++) {
     for (int j = i + 1; j < len; j++) {
       if (arr[i] + arr[j] == value) {
-        Obj++;
+        count += 1;
       }
     }
   }
-  return Obj;
+  return count;
 }
-int countPairs2(int *arr, int len, int value) {
-  return 0;
-  int Obj = 0;
-  for (int i = 0; i < len - 1; i++) {
+int countPairs2(int* arr, int len, int value) {
+  int count = 0;
+   for (int i = 0; i < len - 1; i++) {
     for (int j = len - 1; j > i; j--) {
       if (arr[i] + arr[j] == value) {
-        Obj++;
+        count += 1;
       }
     }
   }
-  return Obj;
+  return count;
 }
-int countPairs3(int *arr, int len, int value) {
-  return 0;
-  int Obj = 0;
+int countPairs3(int* arr, int len, int value) {
+  int count = 0;
   for (int i = 0; i < len - 1; i++) {
-    int left = i;
-    int right = len;
-    while (right > left + 1) {
-      int newmid = (right + left) / 2;
-      if (value < arr[i] + arr[newmid]) {
-        right = newmid;
-      } else if (value > arr[i] + arr[newmid]) {
-        left = newmid;
-      } else {
-        Obj++;
-        int count = newmid + 1;
-        while (count < right && arr[i] + arr[count] == value) {
-          Obj++;
+    int s = i, f = len;
+    while (1 < f - s) {
+      int mid = (s + f) / 2;
+      if (arr[i] + arr[mid] == value) {
+        count++;
+        int r = mid + 1;
+        while (arr[i] + arr[r] == value && r < f) {
           count++;
+          r++;
         }
-        count = newmid - 1;
-        while (count > left && arr[i] + arr[count] == value) {
-          Obj++;
-          count--;
+        r = mid - 1;
+        while (arr[i] + arr[r] == value && r > s) {
+          count++;
+          r--;
         }
         break;
       }
+      if (arr[i] + arr[mid] > value) {
+        f = mid;
+      } else {
+        s = mid;
+      }
     }
   }
-  return Obj;
+  return count;
 }
